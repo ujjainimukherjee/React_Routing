@@ -1,0 +1,19 @@
+body {
+  background: #151515;
+  color: #ffffff;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+body strong {
+  color: #9b9b9b;
+  font-weight: bold;
+}
+.planet {
+  background: #222222;
+  list-style-type: none;
+  border: 1px solid #333333;
+  margin: 20px;
+  padding: 20px;
+  display: inline-block;
+  min-width: 150px;
+}
