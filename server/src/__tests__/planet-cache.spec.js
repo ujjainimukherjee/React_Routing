@@ -31,10 +31,13 @@ describe('planet-cache', () => {
     // Testing with cache TTL 2 seconds
     it('gets data from the db if cache ttl expires', async () => {
       subject.initCache(2, 1)
+
       const planet = { id: 'such', name: 'test', terrain: 'swamps, hills' }
+
       planetDb.get.mockResolvedValue(planet)
       await subject.setInCache(planet.id, planet)
       sleep.sleep(3)
+      
       const result = await subject.get(planet.id)
       expect(result).toEqual(planet)
       expect(planetDb.get).toHaveBeenCalledWith(planet.id)
