@@ -31,7 +31,8 @@ describe('Planet Component', () => {
                 json: () => {
                     return Promise.resolve({
                         id: "5",
-                        name: "pluto"
+                        name: "pluto",
+                        terrain: "swamps, lakes"
                     });
                 }
             });
@@ -41,7 +42,8 @@ describe('Planet Component', () => {
         setTimeout(() => {
             wrapper.update();
             const state = wrapper.instance().state
-            expect(state.planet).toEqual({ id: '5', name: 'pluto'})
+            expect(state.planet).toEqual({ id: '5', name: 'pluto', terrain: 'swamps, lakes' })
+            expect(state.terrainList).toEqual(['swamps', 'lakes'])
             done()
         });
     })
