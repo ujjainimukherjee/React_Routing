@@ -7,7 +7,16 @@
     "lint": "eslint ./src",
     "start": "nodemon ./src/index.js",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "cov": "jest --coverage"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "html",
+      "text"
+    ]
   },
   "author": "",
   "license": "ISC",
