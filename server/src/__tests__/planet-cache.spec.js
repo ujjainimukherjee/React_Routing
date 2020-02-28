@@ -13,7 +13,7 @@ describe('planet-cache', () => {
   })
 
   describe('#get', () => {
-    it('gets data from the db', async () => {
+    it('gets data from the db if it is not in the cache', async () => {
       const planet = { id: 'such', name: 'test' }
       planetDb.get.mockResolvedValue(planet)
 
@@ -24,6 +24,10 @@ describe('planet-cache', () => {
 
       expect(planetDb.upsert).not.toBeCalled()
       expect(planetApi.get).not.toBeCalled()
+    })
+    // TOOD: complete this test
+    it('gets data from the db if cache ttl expires', async () => {
+      
     })
 
     describe('when planet is not cached', () => {
