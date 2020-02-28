@@ -1,31 +1,16 @@
-import React from "react"
-import "./App.css"
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+import Planet from './Planet';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      planet: null
-    }
-  }
-  componentDidMount() {
-    fetch('http://localhost:5000/planets/45')
-      .then(res => res.json())
-      .then(planet => this.setState({ planet: planet }))
-  }
+class App extends Component {
   render() {
     return (
-      <div>
-        {this.state.planet ? (
-          <ul className="planet">
-            <li><strong>ID:</strong> {this.state.planet.id}</li>
-            <li><strong>Name:</strong> {this.state.planet.name}</li>
-          </ul>
-        ) : (
-          <div>Loading</div>
-        )}
+      <div className="App">
+        <Route path="/planets/:id" component={Planet}></Route>
       </div>
-    )
+    );
   }
 }
+
+
+export default App;
