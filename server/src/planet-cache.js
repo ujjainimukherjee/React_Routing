@@ -1,9 +1,8 @@
 const planetDb = require('./planet-db')
 const planetApi = require('./planet-api')
 const NodeCache = require( 'node-cache')
-// initilazing the cache with TTL 20 seconds and checkPeriod 5 seconds
-// this is done for testing purposes only
-let innerCache = new NodeCache({ stdTTL: 20,  checkperiod: 5 });
+// initilazing the cache with TTL 24 hrs and checkPeriod 10 mins
+let innerCache = new NodeCache({ stdTTL: 24*60*60,  checkperiod: 10*60 });
 
 
 function initCache( ttl, checkPeriod){
