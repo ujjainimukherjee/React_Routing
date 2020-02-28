@@ -21,3 +21,8 @@ body strong {
 .planet ul  {
   list-style-type: none;
 }
+
+.planet .ellipsis, .planet .terrain-label {
+  cursor: pointer;
+}
+

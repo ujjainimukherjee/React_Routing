@@ -6,7 +6,9 @@ export default class App extends React.Component {
     super(props)
 
     this.state = {
-      planet: null
+      planet: null,
+      terrainList: null,
+      showEllipsis: true
     }
   }
 
@@ -22,11 +24,18 @@ export default class App extends React.Component {
   }
 
   /**
+   * when terrain values are displayed, the ellipsis is hidden and vice versa
+   */
+  toggleTerrain() {    
+    const ellipsisVal = this.state.showEllipsis ? false: true
+    this.setState({showEllipsis: ellipsisVal })
+  }
+
+  /**
    * convert the data from comma separated strings to an array
    * @param {*} data 
    */
   formatData(data) {
-    console.log('FORMAT .....')
     const terrainList = data.terrain.split(',').map(e => e.trim())
     this.setState({planet: data, terrainList: terrainList })
   }
@@ -44,8 +53,14 @@ export default class App extends React.Component {
           <ul className="planet">
             <li><strong>ID:</strong> {this.state.planet.id}</li>
             <li><strong>Name:</strong> {this.state.planet.name}</li>
-            <li><strong>Terrain:</strong> 
-              <ul>{listItems}</ul>
+            <li><span className="terrain-label" onClick={() => this.toggleTerrain()}><strong>Terrain:</strong>
+              {this.state.showEllipsis   ? 
+                <span className="ellipsis">....</span> : ''
+                }
+                </span>
+              {!this.state.showEllipsis   ? 
+                <ul>{listItems}</ul> : ''
+              }
             </li>
           </ul>
         ) : (

@@ -1,6 +1,6 @@
 import React from "react"
 import Adapter from 'enzyme-adapter-react-16'
-import { shallow, configure } from 'enzyme'
+import { shallow, configure, mount } from 'enzyme'
 import Planet from '../Planet'
 
 
@@ -44,7 +44,32 @@ describe('Planet Component', () => {
             const state = wrapper.instance().state
             expect(state.planet).toEqual({ id: '5', name: 'pluto', terrain: 'swamps, lakes' })
             expect(state.terrainList).toEqual(['swamps', 'lakes'])
+            expect(state.showEllipsis).toEqual(true)
             done()
         });
     })
+
+    it('changes state when ellipsis is clicked', (done) => {
+        fetch.mockImplementation(() => {
+            return Promise.resolve({
+                status: 200,
+                json: () => {
+                    return Promise.resolve({
+                        id: "5",
+                        name: "pluto",
+                        terrain: 'swamps, hills'
+                     });
+                 }
+             });
+         });
+        wrapper = mount(<Planet {...props}/>)
+        
+        setTimeout(() => {
+          wrapper.update();
+          wrapper.find('.ellipsis').simulate('click')
+           const state = wrapper.instance().state;
+           expect(state.showEllipsis).toEqual(false);
+           done();
+         });
+       })
 })
