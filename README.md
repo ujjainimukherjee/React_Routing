@@ -23,7 +23,7 @@ I have done unit testing for the individual files. Integration testing could hav
 
 * I have assumed that the SWAPI api will always give same data for the same planetId and the data will not change. So, the data in the DB does not need to be purged. The planet cache will always query the DB first for data if not in inner cache(node-cache) that has already been fetched from the API
 
-* Since this was a simple click event to toggle beyween showing/hiding the terrain value, I did not use any state management tool like Redux. However for a large project which has multiple API calls and other user interactions and complex data manipulations, a state management tool woul be ideal (eg. Redux with Redux Saga)
+* Since this was a simple click event to toggle between showing/hiding the terrain value, I did not use any state management tool like Redux. However for a large project which has multiple API calls and other user interactions and complex data manipulations, a state management tool would be ideal (eg. Redux ), as well as Redux Saga for API calls
 
 # Design Decisions
 
