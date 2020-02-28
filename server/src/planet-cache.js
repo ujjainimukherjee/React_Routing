@@ -1,7 +1,14 @@
 const planetDb = require('./planet-db')
 const planetApi = require('./planet-api')
 const NodeCache = require( 'node-cache')
+// initilazing the cache with TTL 20 seconds and checkPeriod 5 seconds
+// this is done for testing purposes only
+let innerCache = new NodeCache({ stdTTL: 20,  checkperiod: 5 });
 
+
+function initCache( ttl, checkPeriod){
+  innerCache = new NodeCache({ stdTTL: ttl, checkperiod: checkPeriod });
+}
 
 /**
  * sets the planet object inside the cache
@@ -10,6 +17,8 @@ const NodeCache = require( 'node-cache')
  */
 async function setInCache(planetId, planet){
   console.log('Setting data to cache')
+
+  return innerCache.set(planetId, planet)
 }
 
 /**
@@ -19,12 +28,11 @@ async function setInCache(planetId, planet){
  */
 async function getFromCache(planetId){
   console.log('Getting data from cache')
+  return innerCache.get(planetId)
 }
 
-async function get(planetId) {
-  
-  // Assumtions: I have assumed that the data coming from
-  // the SWAPI api never cahnges
+// Assumtions: I have assumed that the data coming from
+  // the SWAPI api never changes
   // so I will not purge data from database
   // I will create a cache in memory to store planet data
   // This will be done by a npm module 'node-cache'
@@ -34,15 +42,15 @@ async function get(planetId) {
   // it will get data from the API
   // Whenever data is received from database or API call
   // the cache will be populated
+async function get(planetId) {
 
   let planet = await getFromCache(planetId)
   if (planet){
+    console.log('getting from cache')
     return planet
   }
 
-
   planet = await planetDb.get(planetId)
-
   if (planet) {
     console.log('fetched data from db')
     await setInCache(planetId, planet)
@@ -60,5 +68,6 @@ async function get(planetId) {
 module.exports = {
   get,
   getFromCache,
+  initCache,
   setInCache
 }
