@@ -11,12 +11,12 @@ describe('planet-api', () => {
 
   describe('#get', () => {
     it('maps the response', async () => {
-      const res = { data: { name: 'planet-name', population: 42 } }
+      const res = { data: { name: 'planet-name', terrain: 'swamps' } }
       axios.get.mockResolvedValue(res)
 
       const planet = await subject.get('34')
 
-      expect(planet).toEqual({ id: '34', name: res.data.name })
+      expect(planet).toEqual({ id: '34', name: res.data.name, terrain: res.data.terrain })
     })
 
     describe('on a non-200 response', () => {

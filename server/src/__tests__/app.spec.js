@@ -21,7 +21,7 @@ describe('app', () => {
 
   describe('GET /planets/:id', () => {
     it('gets a planet by ID', async () => {
-      const planet = { id: '42', name: 'ultimate question of life' }
+      const planet = { id: '42', name: 'ultimate question of life', terrain:'lakes, hills' }
       await planetDb.upsert(planet)
 
       const res = await request(app)

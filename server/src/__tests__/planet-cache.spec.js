@@ -1,6 +1,8 @@
 const planetDb = require('../planet-db')
 const planetApi = require('../planet-api')
 const subject = require('../planet-cache')
+const sleep = require('sleep')
+
 
 jest.mock('../planet-db')
 jest.mock('../planet-api')
@@ -13,7 +15,7 @@ describe('planet-cache', () => {
   })
 
   describe('#get', () => {
-    it('gets data from the db', async () => {
+    it('gets data from the db if it is not in the cache', async () => {
       const planet = { id: 'such', name: 'test' }
       planetDb.get.mockResolvedValue(planet)
 
@@ -22,6 +24,23 @@ describe('planet-cache', () => {
       expect(result).toEqual(planet)
       expect(planetDb.get).toHaveBeenCalledWith(planet.id)
 
+      expect(planetDb.upsert).not.toBeCalled()
+      expect(planetApi.get).not.toBeCalled()
+    })
+    
+    // Testing with cache TTL 2 seconds
+    it('gets data from the db if cache ttl expires', async () => {
+      subject.initCache(2, 1)
+
+      const planet = { id: 'such', name: 'test', terrain: 'swamps, hills' }
+
+      planetDb.get.mockResolvedValue(planet)
+      await subject.setInCache(planet.id, planet)
+      sleep.sleep(3)
+      
+      const result = await subject.get(planet.id)
+      expect(result).toEqual(planet)
+      expect(planetDb.get).toHaveBeenCalledWith(planet.id)
       expect(planetDb.upsert).not.toBeCalled()
       expect(planetApi.get).not.toBeCalled()
     })

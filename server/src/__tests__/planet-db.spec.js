@@ -12,7 +12,7 @@ describe('planet-db', () => {
 
   describe('#get', () => {
     it('gets the planet from the repo', async () => {
-      const planet = { id: 'rick', name: 'morty' }
+      const planet = { id: 'rick', name: 'morty', terrain: 'lakes, islands, swamps, seas' }
       await subject.upsert(planet)
 
       const result = await subject.get(planet.id)
@@ -23,7 +23,7 @@ describe('planet-db', () => {
 
   describe('#upsert', () => {
     it('updates existing planet data', async () => {
-      const planet = { id: 'homer', name: 'simpson' }
+      const planet = { id: 'homer', name: 'simpson', terrain: 'sky, clouds'}
       await subject.upsert(planet)
       planet.name = 'guy incognito'
 
